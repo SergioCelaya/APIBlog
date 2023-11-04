@@ -24,8 +24,12 @@ const getAllAutores = async (req, res) => {
 
 const getAutorById = async (req, res) => {
   try {
-    const result = await autorModel.selectAutorBId(req.params.autorId);
-    res.json(result[0]);
+    const [result] = await autorModel.selectAutorBId(req.params.autorId);
+    if (result[0] == undefined) {
+      res.json({});
+    } else {
+      res.json(result[0]);
+    }
   } catch (error) {
     res.json({ fatal: error.message });
   }
@@ -35,6 +39,16 @@ const getAutorById = async (req, res) => {
 const updateAutorById = async (req, res) => {
   try {
     const { autorId } = req.params;
+    const [autor] = await autorModel.selectAutorBId(autorId);
+    if (req.body.nombre == undefined) {
+      req.body.nombre = autor[0].nombre;
+    }
+    if (req.body.email == undefined) {
+      req.body.email = autor[0].email;
+    }
+    if (req.body.imagen == undefined) {
+      req.body.imagen = autor[0].imagen;
+    }
     const [result] = await autorModel.updateAutorById(autorId, req.body);
     res.json(result);
   } catch (error) {

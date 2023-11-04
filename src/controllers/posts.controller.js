@@ -13,6 +13,7 @@ const createPost = async (req, res) => {
 };
 
 //GET
+//En este caso he añadido los datos del autor agergando el objeto del autor
 const getAllPosts = async (req, res) => {
   try {
     const [posts] = await PostModel.selectAllPosts();
@@ -27,19 +28,23 @@ const getAllPosts = async (req, res) => {
     res.json({ fatal: error.message });
   }
 };
-
+//En este caso he añadido los datos del autor agergando el objeto del autor
 const getPostById = async (req, res) => {
   try {
     const { postId } = req.params;
     const [result] = await PostModel.selectPostById(postId);
-    const [autor] = await AutorModel.selectAutorBId(result[0].autor_id);
-    result[0].autor = autor[0];
-    res.json(result[0]);
+    if (result[0] == undefined) {
+      res.json({});
+    } else {
+      const autor = await AutorModel.selectAutorBId(result[0].autor_id);
+      result[0].autor = autor[0];
+      res.json(result[0]);
+    }
   } catch (error) {
     res.json({ fatal: error.message });
   }
 };
-
+//Con diferencia al anterior, en este caso he obtenido los datos del autor a través de la query
 const getPostByAutorId = async (req, res) => {
   try {
     const [autId] = req.params.autorId;

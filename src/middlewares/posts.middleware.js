@@ -4,8 +4,7 @@ const checkPostId = async (req, res, next) => {
   try {
     const { postId } = req.params;
     const result = await PostModel.selectPostById(postId);
-    console.log(result[0]);
-    if (result[0].length ===0) {
+    if (result[0].length === 0) {
       return res.json({ fatal: "El post no existe" });
     }
     next();
@@ -23,28 +22,32 @@ const checkIdIsNumeric = (req, res, next) => {
 };
 
 function isValidDate(dateString) {
-    const regExp = /^\d{4}-\d{2}-\d{2}$/;
-    return regExp.test(dateString) && !isNaN(Date.parse(dateString));
-  }
+  const regExp = /^\d{4}-\d{2}-\d{2}$/;
+  return regExp.test(dateString) && !isNaN(Date.parse(dateString));
+}
 
 const checkBodyPost = (req, res, next) => {
   const body = req.body;
-  if (typeof body.titulo != "string" ||body.titulo.length > 60) {
-    return res.json({ fatal: "El título es incorrecto" });
-  }
-  if (typeof body.descripcion != "string" || body.descripcon.length > 100) {
-    return res.json({ fatal: "La descripción es incorrecta" });
-  }
-  if (!isValidDate(body.fecha_creacion)) {
-    return res.json({ fatal: "La fecha de creación es incorrecta" });
-  }
-  if (typeof body.categoria != "string" || body.categoria.length > 20) {
-    return res.json({ fatal: "La categoría es incorrecta" });
-  }
-  if (isNaN(body.autor_id)) {
-    return res.json({ fatal: "El id del autor es incorrecto" });
+  try {
+    if (typeof body.titulo != "string" || body.titulo.length > 60) {
+      return res.json({ fatal: "El título es incorrecto" });
+    }
+    if (typeof body.descripcion != "string" || body.descripcion.length > 100) {
+      return res.json({ fatal: "La descripción es incorrecta" });
+    }
+    if (!isValidDate(body.fecha_creacion)) {
+      return res.json({ fatal: "La fecha de creación es incorrecta" });
+    }
+    if (typeof body.categoria != "string" || body.categoria.length > 20) {
+      return res.json({ fatal: "La categoría es incorrecta" });
+    }
+    if (isNaN(body.autor_id)) {
+      return res.json({ fatal: "El id del autor es incorrecto" });
+    }
+  } catch (error) {
+    return es.json({ fatal: error.message });
   }
   next();
 };
 
-module.exports = { checkPostId, checkIdIsNumeric,checkBodyPost };
+module.exports = { checkPostId, checkIdIsNumeric, checkBodyPost };

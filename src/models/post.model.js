@@ -21,7 +21,7 @@ const selectPostById = (postId) => {
 };
 
 const selectPostByIdAutor = (autorId) => {
-  return db.query("select * from posts where autor_id = ?", [autorId]);
+  return db.query("select pst.*,aut.nombre nombre_autor,aut.email email_autor,aut.imagen imagen_autor from posts pst inner join autores aut on pst.autor_id = aut.idautor where pst.autor_id = ?", [autorId]);
 };
 //UPDATE
 const updatePostById = (
