@@ -61,7 +61,6 @@ const deleteAutorById = async (req, res) => {
   try {
     const { autorId } = req.params;
     const delPost = await postmodel.deletePostFromAutorById(autorId);
-    console.log(delPost);
     const [result] = await autorModel.deteleAutorById(autorId);
     res.json(result);
   } catch (error) {

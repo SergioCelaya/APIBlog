@@ -13,7 +13,7 @@ const createPost = async (req, res) => {
 };
 
 //GET
-//En este caso he añadido los datos del autor agergando el objeto del autor
+//En este caso he añadido los datos del autor agregando el objeto del autor
 const getAllPosts = async (req, res) => {
   try {
     const [posts] = await PostModel.selectAllPosts();
@@ -28,7 +28,7 @@ const getAllPosts = async (req, res) => {
     res.json({ fatal: error.message });
   }
 };
-//En este caso he añadido los datos del autor agergando el objeto del autor
+//En este caso he añadido los datos del autor agregando el objeto del autor
 const getPostById = async (req, res) => {
   try {
     const { postId } = req.params;
