@@ -1,4 +1,7 @@
-Metodos necesarios
+# Metodos de API Blog
+
+
+## Manipulación de posts
 
 -Obtener todos los post
 GET /api/posts
@@ -7,15 +10,30 @@ GET /api/posts
 GET /api/posts/:postId
 
 -Obtener postss de un autor
-GET /api/postsByAutorId/:autorId
+GET /api/byAutorId/:autorId
 
 -Crear un post
 POST /api/posts
 
-Opcionales
+-Modificar un post por id
+UPDATE /api/posts/:postId
 
--Modficar Autor
+-Borrar un post por Id
+DELETE  /api/posts/:postId
+
+## Manipulación de autores
+
+-Obtener autores
+GET /api/autor/
+
+-Obtener autor por id
+GET /api/autor/:autorId
+
+-Crear autor
+POST GET /api/autor/
+
+-Modficar Autor por id
 PUT /api/autor/:autorId
 
--Borrar un post
-DELETE /api/posts/:postId
+-Borrar un autor
+DELETE /api/autor/:autorId
